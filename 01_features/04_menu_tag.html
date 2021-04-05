@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu Tag</title>
+</head>
+
+<body>
+    <h1>Only Suppoerted in Firefox</h1>
+    <div style="background-color: goldenrod; border: 1px soild #ccc; padding: 10px;" contextmenu="mymenu">
+        <p>Right click inside this box to view its context menu.</p>
+        <menu type="context" id="mymenu">
+            <menuitem label="Refresh" onclick="window.location.reload();">
+            </menuitem>
+            <menu label="Share on...">
+                <menuitem label="Twitter" icon=""
+                    onclick="window.open('//twitter.com/intent/tweet?text='+window.location.href)">
+                <menuitem label="Facebook" icon=""
+                    onclick="window.open('//facebook.com/sharer/sharer.php?u='+window.location.href)">
+                </menuitem>
+            </menu>
+            <menuitem label="Email this page">
+            </menuitem>
+        </menu>
+    </div>
+</body>
+
+</html>

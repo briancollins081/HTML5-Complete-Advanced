@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML5 Drag and Drop</title>
+</head>
+
+<body>
+    <section>
+        <h1>HTML5 Drag and Drop</h1>
+        <div id="columns">
+            <div>
+                <img src="./imgs/dnd.png" draggable="true" data-value="HTML5" id="imgHTML" width="200">
+            </div>
+            <div id="dropzone">
+                <img id="imgDrop" draggable="false" src="./imgs/drop.jpg" width="800" height="300"
+                    style="object-fit: cover; opacity: .5;">
+            </div>
+
+            <p id="statusMessage"></p>
+        </div>
+    </section>
+    <script>
+        window.onload = () => {
+
+
+            var dndSupported;
+
+            var draggingElement;
+            var collection = {
+                imgHTML: "HTML5 DRAG CONTENT HERE!!!!"
+            }
+
+            var hoverBorderStyle = '2px dashed #888';
+            var normalBorderStyle = '2px solid #fff';
+
+
+            var statusMessage = document.getElementById("statusMessage");
+            var imgHTML = document.getElementById("imgHTML");
+            var dropzone = document.getElementById("dropzone");
+            var imgDrop = document.getElementById("imgDrop");
+
+            function detectDragNDrop() {
+                if ('draggable' in document.createElement('span')) {
+                    console.log('drag n drop supported');
+                    return true;
+                }
+                return false
+            }
+
+            function init() {
+
+                if (dndSupported = detectDragNDrop()) {
+                    statusMessage.innerHTML = "HTML Drag n Drop is supported!";
+                    imgHTML.addEventListener('dragstart', handleDragStart, false);
+                    dropzone.addEventListener('dragend', handleDragEnd, false);
+                    dropzone.addEventListener('dragover', handleDragOver, false);
+                    dropzone.addEventListener('dragenter', handleDragEnter, false);
+                    dropzone.addEventListener('dragleave', handleDragLeave, false);
+                    dropzone.addEventListener('drop', handleDrop, false);
+                } else {
+                    statusMessage.innerHTML = "HTML Drag n Drop is NOT supported by this browser!";
+                }
+            }
+
+            function handleDragStart() {
+                draggingElement = this;
+                statusMessage.innerHTML = 'Drag started ' + collection[draggingElement.id];
+                event.dataTransfer.setDragImage(draggingElement, 200, 200); //set drag image
+            }
+
+            function handleDragOver(event) {
+                if (event.preventDefault) event.preventDefault();
+                return false;
+            }
+
+            function handleDrop(event) {
+                if (event.stopPropagation) {
+                    event.stopPropagation();
+                }
+                if (event.preventDefault) {
+                    event.preventDefault();
+                }
+                var holding = Object();
+                holding.img = imgDrop;
+                holding.src = holding.img.src;
+                holding.img.src = imgHTML.src;
+                imgHTML.src = holding.src;
+                statusMessage.innerHTML = "Recieved Dropped Data " + collection[draggingElement.id]
+            }
+            function handleDragEnd(event) {
+                this.style.opacity = '1.0';
+                // reset element style
+                draggingElement.className = "undefined";
+                draggingElement = "undefined";
+            }
+
+            function handleDragOver(event) {
+                if (event.preventDefault) {
+                    event.preventDefault();
+                }
+                this.style.border = hoverBorderStyle;
+                return false;
+            }
+
+            function handleDragEnter(event) {
+                this.style.border = hoverBorderStyle;
+            }
+
+            function handleDragLeave(event) {
+                this.style.border = normalBorderStyle
+            }
+
+            init();
+
+        };
+    </script>
+</body>
+
+</html>

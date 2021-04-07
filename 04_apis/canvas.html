@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Canvas</title>
+</head>
+
+<body>
+    <!-- Define canvas -->
+    <canvas id="canvasLine" width="500" height="700" style="border: 1px solid #000;">
+        <!-- Fall back content if canvas is not supported by browser -->
+    </canvas>
+
+    <canvas id="canvasText" width="500" height="700" style="border: 1px solid #000;">
+        <!-- Fall back content if canvas is not supported by browser -->
+    </canvas>
+
+    <canvas id="canvasImage" width="500" height="700" style="border: 1px solid #000;">
+        <!-- Fall back content if canvas is not supported by browser -->
+    </canvas>
+    <script>
+        var line = document.getElementById("canvasLine");
+        var context = line.getContext("2d");
+        context.moveTo(0, 0);
+        context.lineTo(500, 700);
+        context.stroke();
+
+        var text = document.getElementById("canvasText");
+        context = text.getContext("2d");
+        context.font = "30px Arial";
+        context.fillText("Hello There HTML5 Canvas", 10, 70);
+
+        var image = document.getElementById("canvasImage");
+        context = image.getContext("2d");
+        var img = new Image();
+        img.onload = function () {
+            context.drawImage(img, 0, 0);
+        }
+        img.src = "./imgs/canvs_drawing_api.png";
+    </script>
+</body>
+
+</html>

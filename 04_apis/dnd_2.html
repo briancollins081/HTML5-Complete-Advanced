@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drag n Drop</title>
+</head>
+
+<body>
+    <section>
+        <h1>HTML5 Drag and Drop - Recieving Drops Without Drop Zones</h1>
+        <div id="columns">
+            <div>
+                <img src="./imgs/drag.jpg" draggable="true" data-value="HTML5" id="imgHTML" width="200">
+            </div>
+            <div id="dropzone">
+                <img draggable="false" src="./imgs/drop.jpg" width="800" height="300"
+                    style="object-fit: cover; opacity: .5;">
+            </div>
+        </div>
+        <p id="statusMessage"></p>
+    </section>
+    <script>
+        var dndSupported;
+        var sourceID;
+        var payloads = {
+            imgHTML: "HTML5"
+        }
+
+        var statusTag = document.getElementById('statusMessage');
+        var imgHTML = document.getElementById('imgHTML');
+        var dropzone = document.getElementById('dropzone');
+
+        function detectDragNDrop() {
+            if ('draggable' in document.createElement('span')) {
+                console.log('drag n drop is supported');
+                return true;
+            }
+            return false;
+        }
+        function init() {
+            if (dndSupported = detectDragNDrop()) {
+                statusTag.innerHTML = "Using HTML5 Drag n Drop";
+                imgHTML.addEventListener('dragstart', handleDragStart, false);
+                dropzone.addEventListener('dragover', handleDragOver, false);
+                dropzone.addEventListener('drop', handleDrop, false);
+            } else {
+                statusTag.innerHTML = "This browser does not support Drag n Drop";
+            }
+        }
+        window.onload = function () {
+            init();
+        }
+
+        function handleDragStart(event) {
+            console.log("Drag Started Event!!!");
+            sourceID = this.id;
+            statusTag.innerHTML = "Drag started " + payloads[sourceID];
+        }
+
+        function handleDragOver(event) {
+            console.log({ event });
+            if (event.preventDefault) {
+                event.preventDefault();
+            }
+            console.log("Drag Over Event!!!");
+            return false;
+        }
+        function handleDrop(event) {
+            console.log({ sourceID });
+            if (event.preventDefault) {
+                event.preventDefault();
+            }
+            console.log("Drop Event!!!");
+            // var data = event.dataTransfer.getData(DNDType);
+            statusTag.innerHTML = "Recieved Dropped Data as: " + payloads[sourceID];
+        }
+    </script>
+</body>
+
+</html>

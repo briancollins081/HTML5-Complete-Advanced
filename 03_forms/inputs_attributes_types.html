@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Inputs Tags & Attributes</title>
+</head>
+
+<body>
+    <form id="frmUser">
+        <ul>
+            <li>
+                <span>Select your favorite color: </span>
+                <div><input type="color" name="favcolor"></div>
+            </li>
+            <li>
+                <span>Birthday: </span>
+                <div><input type="date" name="bday" max="1979-12-31"></div>
+            </li>
+            <li>
+                <span>Enter a date before 1980-01-01:</span>
+                <div><input type="date" name="bday" max="1979-12-31"></div>
+            </li>
+            <li>
+                <span>Enter a date after 2000-01-01:</span>
+                <div><input type="date" name="bday" min="2000-01-02"></div>
+            </li>
+            <li>
+                <span>Birthday (date and time):</span>
+                <div><input type="datetime-local" name="bdaytime"></div>
+            </li>
+            <li>
+                <span>Select time:</span>
+                <div><input type="time" name="btime"></div>
+            </li>
+            <li>
+                <span>Select month:</span>
+                <div><input type="month" name="bmonth"></div>
+            </li>
+            <li>
+                <span>Select week:</span>
+                <div><input type="week" name="bweek"></div>
+            </li>
+            <li>
+                <span>Email:</span>
+                <div><input type="email" name="email" autocomplete="off" autofocus></div>
+            </li>
+            <li>
+                <span>Enter url:</span>
+                <div><input type="url" name="burl"></div>
+            </li>
+            <li>
+                <span>Enter range:</span>
+                <div><input type="range" max="200" min="20" value="40" name="brange"></div>
+            </li>
+            <li>
+                <span>Enter number:</span>
+                <div><input type="number" name="bno"></div>
+            </li>
+            <li>
+                <span>Enter word to search:</span>
+                <div><input type="search" name="bsearch"></div>
+            </li>
+            <li>
+                <span>Enter phone:</span>
+                <div><input type="tel" name="bsearch"></div>
+            </li>
+            <li>
+                <span>This is a searchable list</span>
+                <div>
+                    <input list="browsers">
+                    <datalist id="browsers">
+                        <option value="Internet Explorer"></option>
+                        <option value="Firefox"></option>
+                        <option value="Opera"></option>
+                        <option value="Chrome"></option>
+                        <option value="Safari"></option>
+                    </datalist>
+                </div>
+            </li>
+            <li>
+                <div>Select images: <input type="file" name="img" multiple></div>
+            </li>
+            <input type="submit" value="Submit">
+            <input type="submit" formaction="/admin_submit.php" value="Admin Submit">
+            <input type="submit" formenctype="multipart/form-data" value="Submit as Multipart/Form Data">
+            <input type="submit" formmethod="POST" formaction="/action.asp" value="Submit using POST">
+            <input type="submit" formnovalidate value="Submit without validation">
+            <input type="submit" formtarget="_blank" value="Submit to a new Window">
+        </ul>
+    </form>
+    First name: <input type="text" name="fname" form="frmUser" placeholder="First name">
+</body>
+
+</html>

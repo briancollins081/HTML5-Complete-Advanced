@@ -1,0 +1,20 @@
+CACHE MANIFEST
+
+CACHE:
+index.html
+cache-manifest-app.manifest
+css/bootstrap.min.css
+css/navbar.css
+fonts/glyphicons-halflings-regular.eot
+fonts/glyphicons-halflings-regular.svg
+fonts/glyphicons-halflings-regular.ttf
+fonts/glyphicons-halflings-regular.woff
+fonts/glyphicons-halflings-regular.woff2
+js/bootstrap.min.js
+js/jquery-3.6.0.min.js
+images/dnd-img-off.png
+images/html-img-off.jpg
+
+FALLBACK:
+images/dnd-img.png images/dnd-img-off.png
+images/html-img.jpg images/html-img-off.jpg

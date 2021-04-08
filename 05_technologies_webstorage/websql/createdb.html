@@ -10,7 +10,7 @@
         var createSQL = 'CREATE TABLE IF NOT EXISTS courses (' +
             'id INTEGER PRIMARY KEY,' +
             'course_name TEXT,' +
-            'publisher TEXT'+
+            'publisher TEXT' +
             ')';
         function getOpenDatabase() {
             try {
@@ -32,17 +32,52 @@
                         createSQL, //QUERY
                         [], //PARAMS
                         function (t, r) {
-                            alert('Create Table, rows affected: ' + r.rowsAffected);
+                            // alert('Create Table, rows affected: ' + r.rowsAffected);
+                            console.log('Create Table, rows affected: ' + r.rowsAffected);
                         }, //SUCCESS CALLBACK
                         function (t, e) {
-                            alert('Create Table Error: ' + e.message);
+                            // alert('Create Table Error: ' + e.message);
+                            console.log('Create Table Error: ' + e.message);
                         }) // ERROR CALLBACK
                 });
                 return db;
             }
         }
+
+        function insertRecord() {
+            db.transaction(
+                function (t) {
+                    t.executeSql('INSERT INTO courses(course_name, publisher) VALUES (? ,?)', ['Exploring Jupiter\'s HTML5 Version', 'Andere']);
+                },
+                function () {
+
+                },
+                function (t, e) {
+                    alert('Insert row ' + e);
+                }
+            )
+        }
+
+        function displayRecords() {
+            db.readTransaction(function (t) {
+                t.executeSql('SELECT * FROM courses ORDER BY course_name', [],
+                    function (t, r) {
+                        var results = "";
+                        for (let i = 0; i < r.rows.length; i++) {
+                            const row = r.rows.item(i);
+                            results += '<div style="padding-bottom:15px; margin-bottom: 15px; border-bottom: 1px solid #232323"> <b>Course # </b>' + row.course_name + " <br/><b>Publisher # </b>" + row.publisher +'</div>';
+                        }
+                        document.getElementById('results').innerHTML = results;
+                    },
+                    function (t, e) {
+
+                    })
+            })
+        }
         window.onload = function () {
-            prepareDatabase();
+            db = prepareDatabase();
+            // insertRecord();
+            displayRecords();
         }
     </script>
 </head>

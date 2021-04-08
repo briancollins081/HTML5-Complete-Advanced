@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web SQL Create Database</title>
+    <script>
+        var createSQL = 'CREATE TABLE IF NOT EXISTS courses (' +
+            'id INTEGER PRIMARY KEY,' +
+            'course_name TEXT,' +
+            'publisher TEXT'+
+            ')';
+        function getOpenDatabase() {
+            try {
+                if (!!window.openDatabase) { return window.openDatabase; }
+                else { return undefined; }
+            } catch (error) {
+                return undefined;
+            }
+        }
+        function prepareDatabase() {
+            var odb = getOpenDatabase();
+            if (!odb) {
+                displayError('Web SQL NOT Supported!');
+                return undefined;
+            } else {
+                var db = odb('AndereDB', '1.0', 'Courses Database', 10 * 1024 * 1024); /* Name, Version, Description, Max Size(10MB) of the Database */
+                db.transaction(function (t) {
+                    t.executeSql(
+                        createSQL, //QUERY
+                        [], //PARAMS
+                        function (t, r) {
+                            alert('Create Table, rows affected: ' + r.rowsAffected);
+                        }, //SUCCESS CALLBACK
+                        function (t, e) {
+                            alert('Create Table Error: ' + e.message);
+                        }) // ERROR CALLBACK
+                });
+                return db;
+            }
+        }
+        window.onload = function () {
+            prepareDatabase();
+        }
+    </script>
+</head>
+
+<body>
+    <h1>Web SQL Create Database</h1>
+    <div id="results"></div>
+
+</body>
+
+</html>

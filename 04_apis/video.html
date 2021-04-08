@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML5 Video</title>
+</head>
+<body>
+    <h1>Video with single source</h1>
+    <video src="./videos/oceans.mp4" width="1080" height="500" controls preload="metadata"></video>
+    <h1>Video with multiple sources</h1>
+    <video width="1080" height="500" controls preload="metadata">
+        <source src="videos/oceans.mp4"/>
+        <source src="videos/oceans.ogg"/>
+        <source src="videos/oceans.webm"/>
+    </video>
+</body>
+</html>

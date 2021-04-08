@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detect Geolocation</title>
+</head>
+
+<body>
+    <div id="status"></div>
+
+    <script>
+        function checkGeoLocation() {
+            try {
+                if (!!navigator.geolocation) { return navigator.geolocation; }
+                else { return undefined; }
+            } catch (error) {
+                return undefined;
+            }
+        }
+        function initializer() {
+            if ((geo = checkGeoLocation())) {
+                document.getElementById("status").innerHTML = "Geo Location API is supported";
+            } else {
+                document.getElementById("status").innerHTML = "Geo Location API is not supported";
+            }
+            geo.getCurrentPosition(getCoordinates, handleError);
+        }
+
+        function getCoordinates(position) {
+            var lat = position.coords.latitude;
+            var lon = position.coords.longitude;
+            console.log({ lat, lon });
+        }
+
+        function handleError(error) {
+            switch (error.code) {
+                case error.TIMEOUT:
+                    console.log("Error: Timeout");
+                    break;
+                case error.POSITION_UNAVAILABLE:
+                    console.log("Position unavailable");
+                    break;
+                case error.PERMISSION_DENIED:
+                    console.log("Permission denied");
+                    break;
+                default:
+                    console.log("Unknown error "+error.code);
+            }
+        }
+
+        window.onload = function () {
+            initializer();
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Storage Examples</title>
+    <script>
+        var err = "";
+        var db = getLocalStorage() || displayError('Local Storage is Not Supported!');
+        function getLocalStorage() {
+            try {
+                if (!!window.sessionStorage) return window.sessionStorage;
+            } catch (error) {
+                return undefined;
+            }
+        }
+        function displayError(message) {
+            err = message;
+            console.log(message);
+        }
+        function displayResults() {
+            if (err) {
+                document.getElementById('results').innerHTML = err;
+            }
+            db.setItem('Publisher', 'Andere Brian '+Math.random());
+            db.setItem('Course', 'Exploring HTML');
+            // db.removeItem('Course')
+            // db.removeItem('Publisher')
+            // db.clear();
+            var pub = db.getItem('Publisher');
+            var course = db.getItem('Course');
+            document.getElementById('results').innerHTML = "<b>Publisher:</b> " + pub + ", <b>Course:</b> " + course;
+        }
+        window.onload = function () {
+            displayResults();
+        }
+    </script>
+</head>
+
+<body>
+    <div id="content">
+        <h1>LocalStorage Example</h1>
+        <div id="results">
+            <!-- results show up here -->
+        </div>
+    </div>
+</body>
+
+</html>

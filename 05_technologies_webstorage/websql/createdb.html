@@ -65,7 +65,7 @@
                         var results = "";
                         for (let i = 0; i < r.rows.length; i++) {
                             const row = r.rows.item(i);
-                            results += '<div style="padding-bottom:15px; margin-bottom: 15px; border-bottom: 1px solid #232323"> <b>Course # </b>' + row.course_name + " <br/><b>Publisher # </b>" + row.publisher +'</div>';
+                            results += '<div style="padding-bottom:15px; margin-bottom: 15px; border-bottom: 1px solid #232323"> ' + row.id + '. <b>Course # </b>' + row.course_name + " <br/><b>Publisher # </b>" + row.publisher + '</div>';
                         }
                         document.getElementById('results').innerHTML = results;
                     },
@@ -74,10 +74,48 @@
                     })
             })
         }
+
+        function updateRecords() {
+            db.transaction(
+                function (t) {
+                    t.executeSql(
+                        'UPDATE courses SET course_name = ?, publisher = ? WHERE id = ?',
+                        ['IndexedDB also supports transactions and works well with Web Workers.', 'Andere DB Analyst', 1]
+                    );
+                },
+                function (t, e) {
+                    alert('Update row: ' + e.message);
+                }
+            )
+        }
+
+        function deleteRecords(id) {
+            db.transaction(function (t) {
+                t.executeSql('DELETE FROM courses WHERE id = ?', [id]);
+            })
+        }
+
+        // function truncateTable() {
+        //     db.transaction(
+        //         function (t) {
+        //             t.executeSql('TRUNCATE TABLE courses');
+        //         },
+        //         function (t, r){
+        //             alert("Success Trunc")
+        //         },
+        //         function(t, e){
+        //             alert("Error Trunc, "+e)
+        //         }
+        //         )
+        // }
         window.onload = function () {
             db = prepareDatabase();
             // insertRecord();
+            // updateRecords();
+            // deleteRecords(5);
+            // truncateTable();
             displayRecords();
+
         }
     </script>
 </head>

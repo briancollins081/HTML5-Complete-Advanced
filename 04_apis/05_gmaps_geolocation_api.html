@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GMAPS with Geolocation API</title>
+    <style>
+        html {
+            height: 100%;
+        }
+
+        body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        #map_canvas {
+            height: 100%;
+            width: 100%;
+        }
+    </style>
+    <!-- <script async
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCMxY57T_1RoU_89vqa8x7_ZmHwi35rKzs&callback=initApplication"></script> -->
+    <script async
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCMxY57T_1RoU_89vqa8x7_ZmHwi35rKzs"></script>
+    <script>
+        var watchID;
+        var geo; //for geolocation object
+        var map; //for google map object
+        var mapMarker; //google map marker object
+
+        // Position options
+        var MAXIMUM_AGE = 2000;
+        var TIMEOUT = 300000;
+        var HIGHTACCURACY = true;
+
+        function getGeolocation() {
+            try {
+                if (!!navigator.geolocation) return navigator.geolocation;
+                return undefined;
+            } catch (error) {
+                return undefined;
+            }
+        }
+        function show_map(position) {
+            var lat = position.coords.latitude;
+            var lon = position.coords.longitude;
+            var latlon = new google.maps.LatLng(lat, lon);
+
+            if (map) {
+                map.panTo(latlon);
+                mapMarker.setPosition(latlon);
+            } else {
+                var myOptions = {
+                    zoom: 16,
+                    center: latlon,
+                    /* mapTypeID: 
+                        ROADMAP - displays default road map view
+                        SATELITE - displays google earth satelite images
+                        HYBRID - displays a mixture of normal and satelite views
+                        TERRAIN - displays a physical map based on terrain information
+                    */
+                    mapTypeID: google.maps.MapTypeId.ROADMAP
+                }
+
+                map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+                map.setTilt(0);
+
+                mapMarker = new google.maps.Marker({
+                    position: latlon,
+                    title: "You are here"
+                });
+                mapMarker.setMap(map);
+            }
+        }
+        function geo_error() {
+            stopWatching();
+            switch (error.code) {
+                case error.TIMEOUT:
+                    console.log("Error: Geolocation Timeout");
+                    break;
+                case error.POSITION_UNAVAILABLE:
+                    console.log("Error: Geolocation Position Unavailable");
+                    break;
+                case error.PERMISSION_DENIED:
+                    console.log("Error: Geolocation Permission Denied");
+                    break;
+                default:
+                    console.log("Error: Geolocation Unknown Error " + error.code);
+            }
+        }
+
+        function stopWatching() {
+            if (watchID) geo.clearWatch(watchID)
+            watchID = null;
+        }
+
+        function startWatching() {
+            watchID = geo.watchPosition(show_map, geo_error, {
+                enableHighAccuracy: HIGHTACCURACY,
+                maximumAge: MAXIMUM_AGE,
+                timeout: TIMEOUT
+            });
+        }
+
+        window.onload = function () {
+            if ((geo = getGeolocation())) {
+                startWatching();
+            } else {
+                alert("Geolocation is not supported in this browser");
+            }
+        }
+
+    </script>
+</head>
+
+<body>
+    <div id="map_canvas"></div>
+</body>
+
+</html>

@@ -26,12 +26,7 @@
             } else {
                 document.getElementById("status").innerHTML = "Geo Location API is not supported";
             }
-            // geo.getCurrentPosition(getCoordinates, handleError);
-            geo.watchPosition(getCoordinates, handleError, {
-                maximumAge: 1000, // cache invalidate timeout in milliseconds
-                timeout: 300000,
-                enableHighAccuracy: true //mobile devices uses GPS to calculate loaction
-            })
+            geo.getCurrentPosition(getCoordinates, handleError);
         }
 
         function getCoordinates(position) {
@@ -52,7 +47,7 @@
                     console.log("Permission denied");
                     break;
                 default:
-                    console.log("Unknown error " + error.code);
+                    console.log("Unknown error "+error.code);
             }
         }
 
